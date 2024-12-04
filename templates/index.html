@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listas de Compras</title>
+</head>
+<body>
+    <h1>Listas de Compras</h1>
+    <form action="/criar_lista" method="POST">
+        <input type="text" name="nome" placeholder="Nome da lista" required>
+        <button type="submit">Criar Lista</button>
+    </form>
+    <ul>
+        {% for lista in listas %}
+            <li>
+                <a href="/lista/{{ lista[0] }}">{{ lista[1] }}</a>
+                <a href="/excluir_lista/{{ lista[0] }}" style="color: red;">[Excluir]</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
