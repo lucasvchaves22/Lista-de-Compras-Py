@@ -7,26 +7,32 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Lista: {{ lista[1] }}</h1>
-    <a href="/">Voltar</a>
-    <form action="/adicionar_item/{{ lista[0] }}" method="POST">
-        <input type="text" name="produto" placeholder="Produto" required>
-        <input type="number" name="quantidade" placeholder="Quantidade" required>
-        <input type="number" step="0.01" name="preco" placeholder="Preço" required>
-        <button type="submit">Adicionar Item</button>
-    </form>
-    <ul>
-        {% for item in itens %}
-            <li>
-                {{ item[2] }} | Quantidade: {{ item[3] }} | Preço: {{ item[4] }} | 
-                {% if item[5] %}
-                    <span style="color: green;">Concluído</span>
-                {% else %}
-                    <a href="/concluir_item/{{ item[0] }}/{{ lista[0] }}">[Concluir]</a>
-                {% endif %}
-                <a href="/excluir_item/{{ item[0] }}/{{ lista[0] }}" style="color: red;">[Excluir]</a>
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="app">
+        <div class="form">
+            <h1>Lista: {{ lista[1] }}</h1>
+            <form action="/adicionar_item/{{ lista[0] }}" method="POST">
+                <input type="text" name="produto" placeholder="Produto" required>
+                <input type="number" name="quantidade" placeholder="Quantidade" required>
+                <input type="number" step="0.01" name="preco" placeholder="Preço" required>
+                <button type="submit">Adicionar Item</button>
+            </form>
+            <a href="/">Voltar</a>
+        </div>
+        <div class="iten">
+            <ul>
+                {% for item in itens %}
+                    <li>
+                        {{ item[2] }} | Quantidade: {{ item[3] }} | Preço: {{ item[4] }} | 
+                        {% if item[5] %}
+                            <span style="color: green;">Concluído</span>
+                        {% else %}
+                            <a href="/concluir_item/{{ item[0] }}/{{ lista[0] }}">[Concluir]</a>
+                        {% endif %}
+                        <a href="/excluir_item/{{ item[0] }}/{{ lista[0] }}" style="color: red;">[Excluir]</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </body>
 </html>

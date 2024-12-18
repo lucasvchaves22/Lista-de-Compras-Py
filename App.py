@@ -107,4 +107,4 @@ def excluir_lista(lista_id):
 
 if __name__ == "__main__":
     setup_database()
-    app.run(debug=True, port=8080)
+    app.run(debug=True, port=8000)
