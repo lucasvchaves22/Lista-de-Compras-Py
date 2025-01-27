@@ -33,8 +33,16 @@ def index():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM listas")
     listas = cursor.fetchall()
+
+    # Calcula o total para cada lista
+    listas_com_totais = []
+    for lista in listas:
+        lista_id, nome = lista
+        total = calcular_total(lista_id)
+        listas_com_totais.append((lista_id, nome, total))
+
     conn.close()
-    return render_template("index.html", listas=listas)
+    return render_template("index.html", listas=listas_com_totais)
 
 # Criar uma nova lista
 @app.route("/criar_lista", methods=["POST"])
@@ -56,9 +64,12 @@ def visualizar_lista(lista_id):
     lista = cursor.fetchone()
     cursor.execute("SELECT * FROM itens WHERE lista_id = ?", (lista_id,))
     itens = cursor.fetchall()
-    conn.close()
-    return render_template("lista.html", lista=lista, itens=itens)
 
+    # Calcula o total da lista
+    total = calcular_total(lista_id)
+
+    conn.close()
+    return render_template("lista.html", lista=lista, itens=itens, total=total)
 # Adicionar item a uma lista
 @app.route("/adicionar_item/<int:lista_id>", methods=["POST"])
 def adicionar_item(lista_id):
@@ -104,6 +115,16 @@ def excluir_lista(lista_id):
     conn.commit()
     conn.close()
     return redirect(url_for("index"))
+
+def calcular_total(lista_id):
+    conn = sqlite3.connect("lista_compras.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT quantidade, preco FROM itens WHERE lista_id = ?", (lista_id,))
+    itens = cursor.fetchall()
+    conn.close()
+
+    total = sum(quantidade * preco for quantidade, preco in itens)
+    return total
 
 if __name__ == "__main__":
     setup_database()

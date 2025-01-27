@@ -10,6 +10,7 @@
     <div class="app">
         <div class="form">
             <h1>Lista: {{ lista[1] }}</h1>
+            <p><strong>Total da Lista:</strong> R$ {{ total|round(2) }}</p> <!-- Exibe o total formatado -->
             <form action="/adicionar_item/{{ lista[0] }}" method="POST">
                 <input type="text" name="produto" placeholder="Produto" required>
                 <input type="number" name="quantidade" placeholder="Quantidade" required>
@@ -17,8 +18,7 @@
                 <button type="submit">Adicionar Item</button>
             </form>
             <a href="/">Voltar</a>
-        </div>
-        <div class="iten">
+        </div>        <div class="iten">
             <ul>
                 {% for item in itens %}
                     <li>

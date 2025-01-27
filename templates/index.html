@@ -17,12 +17,13 @@
         </div>
         <div class="iten">
             <ul>
-            {% for lista in listas %}
-                <li>
-                    <a href="/lista/{{ lista[0] }}">{{ lista[1] }}</a>
-                    <a href="/excluir_lista/{{ lista[0] }}">[Excluir]</a>
-                </li>
-            {% endfor %}
+                {% for lista in listas %}
+                    <li>
+                        <a href="/lista/{{ lista[0] }}">{{ lista[1] }}</a> 
+                        <span>Total: R$ {{ lista[2]|round(2) }}</span> <!-- Exibe o total formatado -->
+                        <a href="/excluir_lista/{{ lista[0] }}">[Excluir]</a>
+                    </li>
+                {% endfor %}
             </ul>
         </div>    
     </div>
