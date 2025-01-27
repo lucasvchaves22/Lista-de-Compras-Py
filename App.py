@@ -126,6 +126,17 @@ def calcular_total(lista_id):
     total = sum(quantidade * preco for quantidade, preco in itens)
     return total
 
+@app.route("/editar_preco/<int:item_id>/<int:lista_id>", methods=["POST"])
+def editar_preco(item_id, lista_id):
+    novo_preco = request.form["novo_preco"]
+    conn = sqlite3.connect("lista_compras.db")
+    cursor = conn.cursor()
+    cursor.execute("UPDATE itens SET preco = ? WHERE id = ?", (float(novo_preco), item_id))
+    conn.commit()
+    conn.close()
+    return redirect(url_for("visualizar_lista", lista_id=lista_id))
+
+
 if __name__ == "__main__":
     setup_database()
     app.run(debug=True, port=8000)
